@@ -1,0 +1,30 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div class="row">
+        <div *ngFor="let item of products" class="col-md-3">
+          <div class="product-box">
+            <img
+              src="{{ item.imageUrl }}"
+              class="img-responsive"
+              alt="imageProduct"
+            />
+            <h1>{{ item.name }}</h1>
+            <hr />
+            <div class="price">{{ item.unitPrice | currency : "EUR" }}</div>
+            <a href="#" class="primary-btn">Add to cart</a>
+          </div>
+        </div>
+
+        <!-- if products are not found  -->
+        <div
+          *ngIf="products?.length == 0"
+          class="alert alert-warning col-md-12"
+          role="alert"
+        >
+          No products found
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
