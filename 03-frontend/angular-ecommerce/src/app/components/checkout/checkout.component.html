@@ -11,6 +11,20 @@
             </div>
             <div class="input-space">
               <input formControlName="firstName" type="text" />
+
+              <div
+                *ngIf="
+                  firstName.invalid && (firstName.dirty || firstName.touched)
+                "
+                class="alert alert-danger mt-1"
+              >
+                <div *ngIf="firstName.errors['required']">
+                  First name is required
+                </div>
+                <div *ngIf="firstName.errors['minlength']">
+                  First name must be at least 2 characters long
+                </div>
+              </div>
             </div>
           </div>
           <div class="row">
@@ -19,6 +33,17 @@
             </div>
             <div class="input-space">
               <input formControlName="lastName" type="text" />
+              <div
+                *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+                class="alert alert-danger mt-1"
+              >
+                <div *ngIf="lastName.errors['required']">
+                  Last name is required
+                </div>
+                <div *ngIf="lastName.errors['minlength']">
+                  Last name must be at least 2 characters long
+                </div>
+              </div>
             </div>
           </div>
           <div class="row">
@@ -35,20 +60,32 @@
           <h3>Shipping Address</h3>
           <div class="row">
             <div class="col-md-2">
-              <label for="state"> State </label>
+              <label for="country"> Country </label>
             </div>
             <div class="input-space">
-              <select formControlName="country">
-                <option>TODO</option>
+              <select
+                formControlName="country"
+                (change)="getRegions('shippingAddress')"
+              >
+                <option *ngFor="let country of countries" [ngValue]="country">
+                  {{ country.name }}
+                </option>
               </select>
             </div>
           </div>
           <div class="row">
             <div class="col-md-2">
-              <label for="street"> Street </label>
+              <label for="region"> Region </label>
             </div>
             <div class="input-space">
-              <input formControlName="street" type="text" />
+              <select formControlName="region">
+                <option
+                  *ngFor="let region of shippingAddressRegions"
+                  [ngValue]="region"
+                >
+                  {{ region.name }}
+                </option>
+              </select>
             </div>
           </div>
           <div class="row">
@@ -61,6 +98,14 @@
           </div>
           <div class="row">
             <div class="col-md-2">
+              <label for="street"> Street </label>
+            </div>
+            <div class="input-space">
+              <input formControlName="street" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
               <label for="zipCode"> Zip Code </label>
             </div>
             <div class="input-space">
@@ -68,6 +113,155 @@
             </div>
           </div>
         </div>
+
+        <!-- Add checkbox to use just one address if they are the same -->
+        <div class="input-space">
+          <label class="au-checkbox">
+            <input type="checkbox" (change)="justOneAddress($event)" />
+            <span class="au-checkmark"></span>Billing address is the same as
+            Shipping?
+          </label>
+        </div>
+
+        <!-- Billing Address -->
+        <div formGroupName="billingAddress" class="form-area">
+          <h3>Billing Address</h3>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="country"> Country </label>
+            </div>
+            <div class="input-space">
+              <select formControlName="country">
+                <option *ngFor="let country of countries" [ngValue]="country">
+                  {{ country.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="region"> Region </label>
+            </div>
+            <div class="input-space">
+              <select formControlName="region">
+                <option
+                  *ngFor="let region of shippingAddressRegions"
+                  [ngValue]="region"
+                >
+                  {{ region.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="city"> City </label>
+            </div>
+            <div class="input-space">
+              <input formControlName="city" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="street"> Street </label>
+            </div>
+            <div class="input-space">
+              <input formControlName="street" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="zipCode"> Zip Code </label>
+            </div>
+            <div class="input-space">
+              <input formControlName="zipCode" type="text" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Credit Card -->
+        <div formGroupName="creditCard" class="form-area">
+          <h3>Credit Card</h3>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="cardType"> Card Type </label>
+            </div>
+            <div class="input-space">
+              <select formControlName="cardType">
+                <option>Visa</option>
+                <option>Mastercard</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="nameOnCard"> Name on card </label>
+            </div>
+            <div class="input-space">
+              <input formControlName="nameOnCard" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="cardNumber"> Card Number </label>
+            </div>
+            <div class="input-space">
+              <input formControlName="cardNumber" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="securityCode"> Security Code </label>
+            </div>
+            <div class="input-space">
+              <input formControlName="securityCode" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="zipCode"> Card Number </label>
+            </div>
+            <div class="input-space">
+              <input formControlName="cardNumber" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="expirationMonth"> Expiration Month </label>
+            </div>
+            <div class="input-space">
+              <select formControlName="expirationMonth">
+                <option *ngFor="let month of creditCardMonth">
+                  {{ month }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="expirationYear"> Expiration Year </label>
+            </div>
+            <div class="input-space">
+              <select
+                formControlName="expirationYear"
+                (change)="handleMonthsAndYears()"
+              >
+                <option *ngFor="let year of creditCardYears">
+                  {{ year }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order details -->
+        <div class="form-area">
+          <h3>Review Your Order</h3>
+          <p>Total Quantity: {{ totalQuantity }}</p>
+          <p>Shipping: FREE</p>
+          <p>Total Price: {{ totalPrice | currency : "EUR" }}</p>
+        </div>
+
         <!-- submit button -->
         <div class="text-center">
           <button type="submit" class="btn btn-info">Purchase</button>
