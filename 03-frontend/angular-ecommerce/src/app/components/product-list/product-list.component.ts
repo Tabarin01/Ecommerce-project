@@ -78,9 +78,9 @@ export class ProductListComponent implements OnInit {
       this.currentCategoryId = 1;
     }
 
-    //Check if we have a different category then previous
+    //Check if we have a different category than previous
 
-    //if we have a different categoory id than previous
+    //if we have a different category id than previous
     //then set thePageNumber back to 1
     if (this.previousCategoryId != this.currentCategoryId) {
       this.thePageNumber = 1;
