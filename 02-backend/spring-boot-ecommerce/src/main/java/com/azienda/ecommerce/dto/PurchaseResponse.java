@@ -1,2 +1,16 @@
-package com.azienda.ecommerce.dto;public class PurchaseResponse {
+package com.azienda.ecommerce.dto;
+
+
+import lombok.Data;
+import lombok.NonNull;
+
+@Data
+public class PurchaseResponse {
+
+    @NonNull
+    private String orderTrackingNumber;
+
+
+
+
 }
